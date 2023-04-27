@@ -12,5 +12,5 @@ import java.util.List;
 public class GitRepositoryDto {
 
     private String repositoryName;
-    private List<GitRepositoryDto> branches;
+    private List<GitBranchDto> branches;
 }
