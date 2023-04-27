@@ -17,18 +17,19 @@ import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("github/")
+@RequestMapping("/api")
 public class RepositorySearcherController {
 
     private final RepositorySearcherService repositorySearcherService;
 
-    @GetMapping(name = "search", consumes = "application/json")
-    public ResponseEntity<List<GitRepositoryDto>> searchRepositoryByUser(@RequestParam String username) throws IOException, InterruptedException {
-        return ResponseEntity.ok(repositorySearcherService.getRepositories(username));
+    @GetMapping(value = "/search", consumes = "application/json")
+    public List<GitRepositoryDto> searchRepositoryByUser(@RequestParam String username) throws IOException, InterruptedException {
+        return repositorySearcherService.getRepositories(username);
     }
 
-    @GetMapping(name = "search", consumes = "application/xml")
+    @GetMapping(value = "/search", consumes = "application/xml")
     public ResponseEntity<List<GitRepositoryDto>> xmlEndpoint(){
         return ResponseEntity.status(NOT_ACCEPTABLE).build();
     }
+
 }

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<ErrorInfo> handleIllegalArgumentException(IllegalArgumentException e) {
-        log.error(e.getMessage());
+    public ResponseEntity<ErrorInfo> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("Illegal argument error", e);
         ErrorInfo errorInfo = ErrorInfo.builder()
                 .status(404)
                 .message(e.getMessage())
@@ -21,14 +21,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorInfo);
     }
 
-    @ExceptionHandler(Exception.class)
-    ResponseEntity<ErrorInfo> handleException(Exception e) {
-        log.error(e.getMessage());
-        ErrorInfo errorInfo = ErrorInfo.builder()
-                .status(500)
-                .message(e.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorInfo);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorInfo> handleException(Exception e) {
+//        log.error(e);
+//        ErrorInfo errorInfo = ErrorInfo.builder()
+//                .status(500)
+//                .message(e.getMessage())
+//                .build();
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorInfo);
+//    }
 
 }
