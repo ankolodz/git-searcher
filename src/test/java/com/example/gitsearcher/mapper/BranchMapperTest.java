@@ -2,7 +2,6 @@ package com.example.gitsearcher.mapper;
 
 import com.example.gitsearcher.dto.GitBranchDto;
 import com.example.gitsearcher.model.GitHubBranchResponse;
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
 import static com.example.gitsearcher.service.StaticResponse.getExample;

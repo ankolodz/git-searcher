@@ -1,6 +1,5 @@
 package com.example.gitsearcher.service;
 
-import com.example.gitsearcher.model.GitHubBranchResponse;
 import com.example.gitsearcher.model.GitHubRepositoryResponse;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
