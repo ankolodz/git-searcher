@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
@@ -41,29 +41,29 @@ public class RepositorySearcherServiceImpl implements RepositorySearcherService 
         Map<String, CompletableFuture<HttpResponse<String>>> repositoryToBranchPromises = userRepository
                 .stream()
                 .map(GitHubRepositoryResponse::getName)
-                .collect(Collectors.toMap(Function.identity(), repoName -> gitHubClient.getBranchesAsync(username, repoName.toString())));
+                .collect(Collectors.toMap(Function.identity(), repoName -> gitHubClient.getBranchesAsync(username, repoName)));
 
         return userRepository
                 .stream()
-                .map(repo ->
-                        getGitRepositoryDto(repositoryToBranchPromises, repo))
-                .filter(Objects::nonNull)
+                .map(repo -> getGitRepositoryDto(repositoryToBranchPromises, repo))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .toList();
     }
 
-    private GitRepositoryDto getGitRepositoryDto(Map<String, CompletableFuture<HttpResponse<String>>> repositoryToBranchPromises, GitHubRepositoryResponse repo) {
+    private Optional<GitRepositoryDto> getGitRepositoryDto(Map<String, CompletableFuture<HttpResponse<String>>> repositoryToBranchPromises, GitHubRepositoryResponse repo) {
         try {
             GitRepositoryDto repositoryDto = repositoryMapper.toDto(repo);
 
-        String response = repositoryToBranchPromises.get(repo.getName()).get().body();
-        GitHubBranchResponse[] gitBranchDtos = gson.fromJson(response, GitHubBranchResponse[].class);
-        repositoryDto.setBranches(branchMapper.toDto(List.of(gitBranchDtos)));
+            String response = repositoryToBranchPromises.get(repo.getName()).get().body();
+            GitHubBranchResponse[] gitBranchDtos = gson.fromJson(response, GitHubBranchResponse[].class);
+            repositoryDto.setBranches(branchMapper.toDto(List.of(gitBranchDtos)));
 
-        return repositoryDto;
+            return Optional.of(repositoryDto);
         } catch (ExecutionException | InterruptedException e) {
             log.error("Error download and parse branch request", e);
         }
 
-        return null;
+        return Optional.empty();
     }
 }
