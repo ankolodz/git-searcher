@@ -18,12 +18,7 @@ import static org.mockserver.stop.Stop.stopQuietly;
 @SpringBootTest
 class RepositorySearcherServiceOnlineIntegrationTest {
 
-    private static ClientAndServer proxy = ClientAndServer.startClientAndServer();
-    ;
-//    @Resource
-//    private Environment environment;
-//    @Resource
-//    private WebApplicationContext webApplicationContext;
+    private static final ClientAndServer proxy = ClientAndServer.startClientAndServer();
 
     @Autowired
     private RepositorySearcherService repositorySearcherService;
