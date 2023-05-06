@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-public class RepositorySearcherServiceIntegrationTest {
+class RepositorySearcherServiceIntegrationTest {
 
     @MockBean
     GitHubClient gitHubClient;

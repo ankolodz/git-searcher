@@ -10,7 +10,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class RepositorySearcherServiceOnlineIntegrationTest {
+class RepositorySearcherServiceOnlineIntegrationTest {
 
     @Autowired
     private RepositorySearcherService repositorySearcherService;

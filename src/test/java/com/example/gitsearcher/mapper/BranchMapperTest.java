@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static com.example.gitsearcher.service.StaticResponse.getExample;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BranchMapperTest {
+class BranchMapperTest {
 
     @Test
     void shouldCorrectMapBranch(){
